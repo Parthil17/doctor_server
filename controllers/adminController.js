@@ -56,7 +56,6 @@ const addDoctor = async (req, res) => {
 // API for admin Login
 const loginAdmin = async (req, res) => {
   try {
-console.log("hihihihih")
     const { email, password } = req.body
     if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
       const token = jwt.sign(email + password, process.env.JWT_SECRET)

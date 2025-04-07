@@ -11,11 +11,35 @@ import userRouter from './routes/userRoute.js'
 // app config
 const app = express()
 
+const allowedOrigins = [
+  'https://doctoradmin-ten.vercel.app',
+  'https://doctoruser.vercel.app'
+];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  }
+
+  // Handle OPTIONS preflight
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
+// 🛠 Optional: Still include CORS middleware for redundancy
 app.use(cors({
-  origin: ['https://doctoradmin-ten.vercel.app','https://doctoruser.vercel.app'],
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   credentials: true,
-}))
+}));
+
 
 const port = process.env.PORT || 4000
 connectDB()
