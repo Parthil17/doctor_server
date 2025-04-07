@@ -10,6 +10,13 @@ import userRouter from './routes/userRoute.js'
 
 // app config
 const app = express()
+
+app.use(cors({
+  origin: ['https://doctoradmin-ten.vercel.app','https://doctoruser.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  credentials: true,
+}))
+
 const port = process.env.PORT || 4000
 connectDB()
 connectCloudinary()
@@ -17,12 +24,8 @@ connectCloudinary()
 // middlewares
 app.use(express.json())
 app.use(morgan("dev"))
-const corsOptions = {
-  origin: ['https://doctoradmin-ten.vercel.app','https://doctoruser.vercel.app'],  // or use a function to allow multiple origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // allowed HTTP methods
-  credentials: true, // allow cookies and auth headers
-};
-app.use(cors(corsOptions))
+
+
 
 // api end point
 app.use('/api/admin', adminRouter)
