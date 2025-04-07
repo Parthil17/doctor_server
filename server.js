@@ -19,7 +19,7 @@ app.use(express.json())
 app.use(morgan("dev"))
 
 app.use(cors({
-  origin: ['https://doctoradmin-ten.vercel.app','https://doctoruser.vercel.app'],
+  origin: 'https://doctoruser.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   credentials: true,
 }))
